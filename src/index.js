@@ -1,26 +1,28 @@
 module.exports = function check(str, bracketsConfig) {
-  // your solution
-}
-
-
-function check(str, bracketsConfig) {
   let openBrace = "";
   let closeBrace = "";
-  let examination = true;
-  if (str.length % 2 === 0) {
+  let truthTest = true;
+
+  while (str.length !== 0) {
+    if (str.length % 2 !== 0) {
+      truthTest = false;
+      break;
+    };
+    let copyStr = str.repeat(1);
     for (brackets of bracketsConfig) {
       openBrace = brackets[0];
       closeBrace = brackets[1];
-
-      // while (str.indexOf(closeBrace) !== -1) {
-      //     console.log(str.indexOf(closeBrace));
-      // };
-
+      numCloseBrace = str.indexOf(closeBrace);
+      if (str.at(numCloseBrace - 1) === openBrace) {
+        str = str.slice(0, numCloseBrace - 1) + str.slice(numCloseBrace + 1);
+      };
+      // console.log(str);
     };
-  } else {
-    examination = false;
+    if (copyStr === str) {
+      truthTest = false;
+      break;
+    };
   };
+  return truthTest;
 }
-console.log(check('([{}])', [['(', ')'], ['[', ']'], ['{', '}']]));
-
-// check('[(])', [['(', ')'], ['[', ']']]) // -> false
+// console.log(check('{(})', [['(', ')'], ['[', ']'], ['{', '}']]));
