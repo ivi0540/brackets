@@ -2,7 +2,6 @@ module.exports = function check(str, bracketsConfig) {
   let openBrace = "";
   let closeBrace = "";
   let truthTest = true;
-  if (str === "") { return false; };
 
   while (str.length !== 0) {
     if (str.length % 2 !== 0) {
@@ -13,15 +12,14 @@ module.exports = function check(str, bracketsConfig) {
     for (brackets of bracketsConfig) {
       openBrace = brackets[0];
       closeBrace = brackets[1];
-      numCloseBrace = str.indexOf(closeBrace, 1);
-      // if (numCloseBrace === 0) {
-      //     numCloseBrace = str.indexOf(closeBrace);
-      // }
+      numCloseBrace = str.indexOf(closeBrace);
+      if (openBrace === closeBrace) {
+        numCloseBrace = str.indexOf(closeBrace, numCloseBrace + 1);
+      }
       if (str.at(numCloseBrace - 1) === openBrace) {
-        // console.log(numCloseBrace);
         str = str.slice(0, numCloseBrace - 1) + str.slice(numCloseBrace + 1);
       };
-      console.log(str);
+      // console.log(str);
     };
     if (copyStr === str) {
       truthTest = false;
@@ -30,7 +28,3 @@ module.exports = function check(str, bracketsConfig) {
   };
   return truthTest;
 }
-console.log(
-  check('|()|(||)||', [['(', ')'], ['|', '|']])
-);
-// console.log(check('{(})', [['(', ')'], ['[', ']'], ['{', '}']]));
